@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "npm run test:unit && npm run test:contract",
-    "test:unit": "node --test --test-isolation=none tests/unit/catalog.test.mjs",
-    "test:consumer": "node --test --test-isolation=none tests/contract/consumer.pact.test.mjs",
+    "test:unit": "node tests/unit/catalog.test.mjs",
+    "test:consumer": "node tests/contract/consumer.pact.test.mjs",
     "test:provider": "node tests/contract/provider.verify.mjs",
     "test:contract": "npm run test:consumer && npm run test:provider",
     "check": "node --check services/catalog/server.mjs && node --check services/orders/client.mjs && node --check tests/contract/consumer.pact.test.mjs && node --check tests/contract/provider.verify.mjs"

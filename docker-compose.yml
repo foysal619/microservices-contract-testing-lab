@@ -1,0 +1,25 @@
+services:
+  pact-broker:
+    image: pactfoundation/pact-broker:2.118.0.0
+    ports: ["9292:9292"]
+    environment:
+      PACT_BROKER_DATABASE_URL: postgres://pact:pact@postgres/pact
+      PACT_BROKER_LOG_LEVEL: INFO
+      PACT_BROKER_SQL_LOG_LEVEL: WARN
+    depends_on:
+      postgres:
+        condition: service_healthy
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: pact
+      POSTGRES_PASSWORD: pact
+      POSTGRES_DB: pact
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pact"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes: ["pact-data:/var/lib/postgresql/data"]
+volumes:
+  pact-data:
